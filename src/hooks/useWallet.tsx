@@ -29,7 +29,7 @@ const useWallet = (): WalletProvider => {
   const account = React.useMemo(() => accounts?.[0], [accounts]);
 
   const truncateAccount = React.useMemo(
-    () => `${account?.slice(0, 4)}...${account?.slice(account.length - 5, account.length - 1)}`,
+    () => `${account?.slice(0, 5)}...${account?.slice(account.length - 4, account.length)}`,
     [account],
   );
 
@@ -77,7 +77,7 @@ const useWallet = (): WalletProvider => {
 
     try {
       const provider = await wallet.connect();
-      const web3Provider = new ethers.providers.Web3Provider(provider, );
+      const web3Provider = new ethers.providers.Web3Provider(provider);
       const accounts = await web3Provider.listAccounts();
       const network = await web3Provider.getNetwork();
 
@@ -93,6 +93,20 @@ const useWallet = (): WalletProvider => {
     await wallet?.clearCachedProvider();
     resetState();
   }, [wallet, resetState]);
+
+  React.useEffect(() => {
+    if (!provider?.on) return;
+
+    const handleAccountChanged = (accounts: Array<string>) => setAccounts(accounts);
+    const handleDisconnect = () => disconnect();
+
+    provider.on('accountChanged', handleAccountChanged);
+    provider.on('disconnect', handleDisconnect);
+
+    return () => {
+      provider.removeAllListeners();
+    };
+  }, [provider?.on, disconnect, provider]);
 
   React.useEffect(() => {
     init();
