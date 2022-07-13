@@ -4,7 +4,7 @@ import Header from './header';
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
-    <Stack>
+    <Stack width="100vw" height="100vh">
       <Header />
       {children}
     </Stack>

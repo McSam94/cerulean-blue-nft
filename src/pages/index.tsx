@@ -1,13 +1,18 @@
+import FilterPanel from '@components/pages/home/filter-panel';
+import NFTListing from '@components/pages/home/nft-listing';
+import { Stack } from '@mui/material';
 import type { NextPage } from 'next';
-import { Button } from '@mui/material';
-import useWallet from '@hooks/useWallet';
-import Layout from '@components/layout';
 
 const Home: NextPage = () => {
   return (
-    <Layout>
-      <div>Home</div>
-    </Layout>
+    <Stack direction="row" width="100%">
+      <Stack flex={1}>
+        <NFTListing />
+      </Stack>
+      <Stack flexBasis="25%">
+        <FilterPanel />
+      </Stack>
+    </Stack>
   );
 };
 

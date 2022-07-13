@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Web3Modal, { IProviderOptions } from 'web3modal';
+import Web3Modal from 'web3modal';
 import WalletConnect from '@walletconnect/web3-provider';
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
 import { ethers } from 'ethers';
@@ -77,7 +77,7 @@ const useWallet = (): WalletProvider => {
 
     try {
       const provider = await wallet.connect();
-      const web3Provider = new ethers.providers.Web3Provider(provider);
+      const web3Provider = new ethers.providers.Web3Provider(provider, );
       const accounts = await web3Provider.listAccounts();
       const network = await web3Provider.getNetwork();
 
