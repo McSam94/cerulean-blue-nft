@@ -1,8 +1,13 @@
 import * as React from 'react';
 import NFTProvider from './nft';
+import WalletProvider from './wallet';
 
 const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
-  return <NFTProvider>{children}</NFTProvider>;
+  return (
+    <WalletProvider>
+      <NFTProvider>{children}</NFTProvider>
+    </WalletProvider>
+  );
 };
 
 export default Providers;
