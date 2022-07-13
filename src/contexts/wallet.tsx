@@ -216,20 +216,30 @@ const WalletProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     }
   }, [wallet?.cachedProvider, connect]);
 
-  // TODO: not working
+  // Listen USDC balance
   React.useEffect(() => {
     if (!tokensContract) return;
 
     tokensContract.forEach((tokenContract) => {
-      tokenContract.on('Transfer', (to, amount, from) => console.log(to, amount, from));
-      tokenContract.on('Approval', (to, amount, from) => console.log(to, amount, from));
+      tokenContract.on('Transfer', () => getBalances());
     });
     return () => {
       tokensContract.forEach((tokenContract) => {
         tokenContract.removeAllListeners();
       });
     };
-  }, [tokensContract]);
+  }, [tokensContract, getBalances]);
+
+  // Listen ETH balance
+  React.useEffect(() => {
+    if (!account) return;
+
+    web3Provider?.on(account, () => getBalances());
+
+    return () => {
+      web3Provider?.removeAllListeners();
+    };
+  }, [web3Provider, account, getBalances]);
 
   return (
     <walletContext.Provider
