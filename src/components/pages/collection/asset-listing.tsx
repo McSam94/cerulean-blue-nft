@@ -35,7 +35,7 @@ const AssetListing: React.FC = () => {
       loadMoreItems={() => fetchMoreAssets(collectionSlug)}
       columnCount={COLUMN_COUNT}
       rowHeight={LIST_ITEM_HEIGHT}
-      hasMore={hasMoreAssets}
+      hasMore={hasMoreAssets && !isSearch}
       gridRenderer={({ index }) => {
         const asset = assets[index];
 

@@ -37,7 +37,6 @@ const ThumbGrid: React.FC<ThumbGridProps> = ({
           <InfiniteLoader
             isItemLoaded={(index: number) => {
               const indexWithoutHeader = header ? Math.max(index - columnCount, 0) : index;
-              console.log(indexWithoutHeader < data.length);
               return indexWithoutHeader < data.length;
             }}
             itemCount={data.length * 10}
