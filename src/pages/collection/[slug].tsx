@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NextPage } from 'next';
+import { NextPage, NextPageContext } from 'next';
 import { IconButton, InputAdornment, OutlinedInput, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -7,19 +7,12 @@ import AssetListing from '@components/pages/collection/asset-listing';
 import { useNFT } from '@contexts/NFT';
 import SafeImage from '@components/common/SafeImage';
 import StatBox from '@components/pages/collection/stat-box';
-import useResponsive from '@hooks/useResponsive';
+import { Collection as Collection } from '@contexts/NFT/types';
+import OpenSeaService from '@services/opensea';
 
-const Collection: NextPage = () => {
+const CollectionDetail: NextPage<{ collection: Collection }> = ({ collection }) => {
   const { query } = useRouter();
-  const { isMobile } = useResponsive();
-  const {
-    fetchCollectionDetail,
-    resetCollectionDetail,
-    onTextSearch,
-    clearSearch,
-    collection,
-    isCollectionDetailLoading,
-  } = useNFT();
+  const { resetCollectionDetail, onTextSearch, clearSearch, isCollectionDetailLoading } = useNFT();
 
   const [searchTerm, setSearchTerm] = React.useState<string>('');
 
@@ -46,17 +39,13 @@ const Collection: NextPage = () => {
   }, [clearSearch]);
 
   React.useEffect(() => {
-    if (!collectionSlug) return;
-
-    fetchCollectionDetail(collectionSlug);
-
     return () => {
       resetCollectionDetail();
     };
-  }, [fetchCollectionDetail, resetCollectionDetail, collectionSlug]);
+  }, [resetCollectionDetail]);
 
   return (
-    <Stack width="100%" height="100%">
+    <Stack width="100%">
       <Stack width="100%" height={350} position="relative">
         <SafeImage
           src={collection?.banner_image_url}
@@ -65,8 +54,8 @@ const Collection: NextPage = () => {
           objectFit="cover"
         />
       </Stack>
-      <Stack paddingX={isMobile ? 2 : 8}>
-        <Stack width="100%" alignItems="center" paddingX={isMobile ? 0 : 8} spacing={4}>
+      <Stack paddingX={{ xs: 2, sm: 8 }}>
+        <Stack width="100%" alignItems="center" paddingX={{ xs: 0, sm: 8 }} spacing={4}>
           <Stack position="relative" width={160} height={160} marginTop={-12}>
             <SafeImage
               style={{ borderRadius: 12 }}
@@ -81,7 +70,7 @@ const Collection: NextPage = () => {
             {collection?.name}
           </Typography>
           <Typography variant="subtitle1">{collection?.description || '-'}</Typography>
-          <Stack direction="row" alignItems="center" justifyContent="center" flexWrap="wrap" spacing={isMobile ? 0 : 2}>
+          <Stack direction="row" alignItems="center" justifyContent="center" flexWrap="wrap" spacing={{ xs: 0, sm: 2 }}>
             <StatBox icon="storefront" stat={collection?.stats.count ?? 0} label="Items" />
             <StatBox icon="group" stat={collection?.stats.num_owners ?? 0} label="Owners" />
             <StatBox icon="local_bar" stat={collection?.stats.total_volume ?? 0} label="Total Volume" />
@@ -111,4 +100,15 @@ const Collection: NextPage = () => {
   );
 };
 
-export default Collection;
+CollectionDetail.getInitialProps = async (context: NextPageContext) => {
+  const collectionSlug = context.query.slug;
+
+  const slug = typeof collectionSlug === 'string' ? collectionSlug : collectionSlug?.[0] ?? '';
+
+  const result = await OpenSeaService.GetCollection(slug);
+  const collection: Collection = result.data.collection;
+
+  return { collection };
+};
+
+export default CollectionDetail;

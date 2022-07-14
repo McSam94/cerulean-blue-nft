@@ -6,10 +6,7 @@ import { useRouter } from 'next/router';
 import useResponsive from '@hooks/useResponsive';
 
 const Header: React.FC = () => {
-  const { route } = useRouter();
   const { isMobile } = useResponsive();
-
-  const isCollectionDetailPage = React.useMemo(() => /^\/collection/.test(route), [route]);
 
   return (
     <Stack
@@ -20,10 +17,6 @@ const Header: React.FC = () => {
       zIndex="100"
       paddingY={4}
       paddingX={5}
-      sx={{
-        backgroundColor: 'rgba(255, 255, 255, .9)',
-        ...(isCollectionDetailPage ? { position: 'fixed' } : {}),
-      }}
     >
       <Stack direction="row" spacing={2}>
         <Link href="/" passHref>
