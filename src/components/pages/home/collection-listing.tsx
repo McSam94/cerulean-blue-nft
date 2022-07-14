@@ -42,7 +42,6 @@ const NftListing: React.FC = () => {
               <Stack
                 alignItems="center"
                 borderRadius={2}
-                height={LIST_ITEM_HEIGHT}
                 sx={{ cursor: 'pointer', boxShadow: '0px 4px 12px 2px #0000000D;' }}
               >
                 <Stack height={LIST_ITEM_HEIGHT * (2 / 3)} width="100%" position="relative">
