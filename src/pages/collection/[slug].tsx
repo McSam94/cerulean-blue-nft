@@ -7,9 +7,11 @@ import AssetListing from '@components/pages/collection/asset-listing';
 import { useNFT } from '@contexts/NFT';
 import SafeImage from '@components/common/SafeImage';
 import StatBox from '@components/pages/collection/stat-box';
+import useResponsive from '@hooks/useResponsive';
 
 const Collection: NextPage = () => {
   const { query } = useRouter();
+  const { isMobile } = useResponsive();
   const {
     fetchCollectionDetail,
     resetCollectionDetail,
@@ -63,8 +65,8 @@ const Collection: NextPage = () => {
           objectFit="cover"
         />
       </Stack>
-      <Stack paddingX={8}>
-        <Stack width="100%" alignItems="center" paddingX={8} spacing={4}>
+      <Stack paddingX={isMobile ? 2 : 8}>
+        <Stack width="100%" alignItems="center" paddingX={isMobile ? 0 : 8} spacing={4}>
           <Stack position="relative" width={160} height={160} marginTop={-12}>
             <SafeImage
               style={{ borderRadius: 12 }}
@@ -75,11 +77,11 @@ const Collection: NextPage = () => {
               objectFit="contain"
             />
           </Stack>
-          <Typography variant="h4" fontWeight={700}>
+          <Typography variant="h4" fontWeight={700} textAlign="center">
             {collection?.name}
           </Typography>
           <Typography variant="subtitle1">{collection?.description || '-'}</Typography>
-          <Stack direction="row" alignItems="center" spacing={2}>
+          <Stack direction="row" alignItems="center" justifyContent="center" flexWrap="wrap" spacing={isMobile ? 0 : 2}>
             <StatBox icon="storefront" stat={collection?.stats.count ?? 0} label="Items" />
             <StatBox icon="group" stat={collection?.stats.num_owners ?? 0} label="Owners" />
             <StatBox icon="local_bar" stat={collection?.stats.total_volume ?? 0} label="Total Volume" />

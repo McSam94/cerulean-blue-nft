@@ -1,15 +1,24 @@
 import * as React from 'react';
+import Link from 'next/link';
 import { Avatar, Stack, Typography } from '@mui/material';
 import { useNFT } from '@contexts/NFT';
 import ThumbGrid from '@components/common/ThumbGrid';
 import SafeImage from '@components/common/SafeImage';
-import Link from 'next/link';
+import useResponsive from '@hooks/useResponsive';
 
 const LIST_ITEM_HEIGHT = 300;
-const COLUMN_COUNT = 3;
 
 const NftListing: React.FC = () => {
+  const { isMobile, isTablet } = useResponsive();
   const { fetchCollections, fetchMoreCollections, collections, isLoadingMore } = useNFT();
+
+  const columnCount = React.useMemo(() => {
+    if (isMobile) return 1;
+
+    if (isTablet) return 2;
+
+    return 3;
+  }, [isMobile, isTablet]);
 
   React.useEffect(() => {
     fetchCollections();
@@ -20,7 +29,7 @@ const NftListing: React.FC = () => {
       data={collections}
       isLoadingMore={isLoadingMore}
       loadMoreItems={fetchMoreCollections}
-      columnCount={COLUMN_COUNT}
+      columnCount={columnCount}
       rowHeight={LIST_ITEM_HEIGHT}
       header={({ style }) => (
         <Stack justifyContent="center" alignItems="center" style={style}>

@@ -3,9 +3,11 @@ import { Stack, Typography } from '@mui/material';
 import WalletButton from '@components/wallet';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import useResponsive from '@hooks/useResponsive';
 
 const Header: React.FC = () => {
   const { route } = useRouter();
+  const { isMobile } = useResponsive();
 
   const isCollectionDetailPage = React.useMemo(() => /^\/collection/.test(route), [route]);
 
@@ -27,7 +29,7 @@ const Header: React.FC = () => {
         <Link href="/" passHref>
           <a>
             <Typography variant="h5" color="primary.dark" sx={{ fontWeight: 'bold' }}>
-              Cerulean Blue NFT
+              {isMobile ? `CB NFT` : 'Cerulean Blue NFT'}
             </Typography>
           </a>
         </Link>
