@@ -1,11 +1,11 @@
-import NFTListing from '@components/pages/home/nft-listing';
+import CollectionListing from '@components/pages/home/collection-listing';
 import { Stack } from '@mui/material';
 import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
   return (
-    <Stack direction="row" width="100%" height="100%">
-      <NFTListing />
+    <Stack width="100%" height="100%">
+      <CollectionListing />
     </Stack>
   );
 };

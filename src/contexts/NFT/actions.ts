@@ -7,6 +7,10 @@ export enum ReducerActionType {
   GETTING_MORE_COLLECTIONS,
   SUCCESS_GET_MORE_COLLECTIONS,
   FAILED_GET_MORE_COLLECTIONS,
+  GETTING_COLLECTION_DETAIL,
+  SUCCESS_GET_COLLECTION_DETAIL,
+  FAILED_GET_COLLECTION_DETAIL,
+  RESET_COLLECTION_DETAIL,
   GETTING_ASSETS,
   SUCCESS_GET_ASSETS,
   FAILED_GET_ASSETS,
@@ -14,6 +18,7 @@ export enum ReducerActionType {
   SUCCESS_LOAD_MORE_ASSETS,
   FAILED_LOAD_MORE_ASSETS,
   SEARCH_ASSETS,
+  RESET_SEARCH_ASSETS,
 }
 
 export type startFetchCollections = {
@@ -42,6 +47,24 @@ export type failedFetchMoreCollections = {
   type: ReducerActionType.FAILED_GET_MORE_COLLECTIONS;
 };
 
+export type startFetchCollectionDetail = {
+  type: ReducerActionType.GETTING_COLLECTION_DETAIL;
+};
+
+export type fetchedCollectionDetail = {
+  type: ReducerActionType.SUCCESS_GET_COLLECTION_DETAIL;
+  payload: Collection;
+  hasMore: boolean;
+};
+
+export type failedFetchCollectionDetail = {
+  type: ReducerActionType.FAILED_GET_COLLECTION_DETAIL;
+};
+
+export type resetCollectionDetail = {
+  type: ReducerActionType.RESET_COLLECTION_DETAIL;
+};
+
 export type startFetchAssetsAction = {
   type: ReducerActionType.GETTING_ASSETS;
 };
@@ -49,6 +72,7 @@ export type startFetchAssetsAction = {
 export type fetchedAssetsAction = {
   type: ReducerActionType.SUCCESS_GET_ASSETS;
   payload: Array<Asset>;
+  hasMore: boolean;
 };
 
 export type failedFetchAssetsAction = {
@@ -62,6 +86,7 @@ export type startFetchMoreAssetsAction = {
 export type fetchedMoreAssets = {
   type: ReducerActionType.SUCCESS_LOAD_MORE_ASSETS;
   payload: Array<Asset>;
+  hasMore: boolean;
 };
 
 export type failedFetchMoreAssets = {
@@ -70,7 +95,11 @@ export type failedFetchMoreAssets = {
 
 export type searchAssets = {
   type: ReducerActionType.SEARCH_ASSETS;
-  payload: { [x: string]: any };
+  payload: Array<Asset>;
+};
+
+export type resetSearchAssets = {
+  type: ReducerActionType.RESET_SEARCH_ASSETS;
 };
 
 export type ReducerAction =
@@ -80,10 +109,15 @@ export type ReducerAction =
   | startFetchMoreCollections
   | fetchedMoreCollections
   | failedFetchMoreCollections
+  | startFetchCollectionDetail
+  | fetchedCollectionDetail
+  | failedFetchCollectionDetail
+  | resetCollectionDetail
   | startFetchAssetsAction
   | fetchedAssetsAction
   | failedFetchAssetsAction
   | startFetchMoreAssetsAction
   | fetchedMoreAssets
   | failedFetchMoreAssets
-  | searchAssets;
+  | searchAssets
+  | resetSearchAssets;

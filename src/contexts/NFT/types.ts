@@ -24,24 +24,38 @@ export type Asset = {
 };
 
 export type Collection = {
+  banner_image_url: string;
   created_date: string;
   description: string;
   image_url: string;
   large_image_url: string;
   name: string;
   slug: string;
+  primary_asset_contracts: {
+    image_url: string;
+    name: string;
+    description: string;
+  };
+  stats: {
+    count: number;
+    num_owners: number;
+    total_volume: number;
+    floor_price: number;
+    total_sales: number;
+  };
 };
 
 export interface NFTReducer {
   page: number;
   size: number;
+  isSearch: boolean;
+  hasMoreAssets: boolean;
+  collection: Collection | undefined;
   collections: Array<Collection>;
   assets: Array<Asset>;
+  filteredAssets: Array<Asset>;
   isCollectionsLoading: boolean;
   isAssetsLoading: boolean;
   isLoadingMore: boolean;
-  search: {
-    cost: number | undefined;
-    date: Date | undefined;
-  };
+  isCollectionDetailLoading: boolean;
 }

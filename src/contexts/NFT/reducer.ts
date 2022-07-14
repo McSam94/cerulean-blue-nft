@@ -3,16 +3,17 @@ import { NFTReducer } from './types';
 
 export const initialState: NFTReducer = {
   page: 1,
-  size: 50,
+  size: 60,
+  isSearch: false,
+  hasMoreAssets: false,
+  collection: undefined,
   collections: [],
   assets: [],
+  filteredAssets: [],
   isCollectionsLoading: false,
   isAssetsLoading: false,
   isLoadingMore: false,
-  search: {
-    cost: undefined,
-    date: undefined,
-  },
+  isCollectionDetailLoading: false,
 };
 
 export const nftReducer: React.Reducer<NFTReducer, ReducerAction> = (state = initialState, action) => {
@@ -44,6 +45,7 @@ export const nftReducer: React.Reducer<NFTReducer, ReducerAction> = (state = ini
         ...state,
         page: 1,
         assets: [...state.assets, ...action.payload],
+        hasMoreAssets: action.hasMore,
         isLoading: false,
       };
     }
@@ -73,6 +75,7 @@ export const nftReducer: React.Reducer<NFTReducer, ReducerAction> = (state = ini
         ...state,
         page: state.page + 1,
         assets: [...state.assets, ...action.payload],
+        hasMoreAssets: action.hasMore,
         isLoadingMore: false,
       };
     }
@@ -86,10 +89,42 @@ export const nftReducer: React.Reducer<NFTReducer, ReducerAction> = (state = ini
     case ReducerActionType.SEARCH_ASSETS: {
       return {
         ...state,
-        search: {
-          ...state.search,
-          ...action.payload,
-        },
+        filteredAssets: action.payload,
+        isSearch: true,
+      };
+    }
+    case ReducerActionType.RESET_SEARCH_ASSETS: {
+      return {
+        ...state,
+        filteredAssets: [],
+        isSearch: false,
+      };
+    }
+    case ReducerActionType.GETTING_COLLECTION_DETAIL: {
+      return {
+        ...state,
+        isCollectionDetailLoading: true,
+      };
+    }
+    case ReducerActionType.SUCCESS_GET_COLLECTION_DETAIL: {
+      return {
+        ...state,
+        collection: action.payload,
+        isCollectionDetailLoading: false,
+      };
+    }
+    case ReducerActionType.FAILED_GET_COLLECTION_DETAIL: {
+      return {
+        ...state,
+        isCollectionDetailLoading: false,
+      };
+    }
+    case ReducerActionType.RESET_COLLECTION_DETAIL: {
+      return {
+        ...state,
+        collection: undefined,
+        assets: [],
+        isCollectionDetailLoading: false,
       };
     }
     default: {
