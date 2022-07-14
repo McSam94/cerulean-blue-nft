@@ -53,7 +53,6 @@ const NFTProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   }, [state.size]);
 
   const fetchMoreCollections = React.useCallback(async () => {
-    console.log(state.page);
     dispatch({ type: ReducerActionType.GETTING_MORE_COLLECTIONS });
 
     const result = await OpenSeaService.GetCollections({
