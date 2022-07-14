@@ -30,7 +30,7 @@ const AssetListing: React.FC = () => {
   return (
     <ThumbGrid
       data={data}
-      height={500}
+      height={1000}
       isLoadingMore={isLoadingMore}
       loadMoreItems={() => fetchMoreAssets(collectionSlug)}
       columnCount={COLUMN_COUNT}
@@ -62,7 +62,7 @@ const AssetListing: React.FC = () => {
             </Stack>
             <Stack direction="row" width="100%" alignItems="center" paddingY={2} paddingX={4} spacing={4}>
               <Typography variant="subtitle1" fontWeight={500}>
-                {name}
+                {name ?? 'Unknown'}
               </Typography>
             </Stack>
           </Stack>

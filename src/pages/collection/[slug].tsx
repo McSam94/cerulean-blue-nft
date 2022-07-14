@@ -3,7 +3,6 @@ import { NextPage } from 'next';
 import { IconButton, InputAdornment, OutlinedInput, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import ClearIcon from '@mui/icons-material/Clear';
-import FilterPanel from '@components/pages/home/filter-panel';
 import AssetListing from '@components/pages/collection/asset-listing';
 import { useNFT } from '@contexts/NFT';
 import SafeImage from '@components/common/SafeImage';
@@ -89,9 +88,6 @@ const Collection: NextPage = () => {
           </Stack>
         </Stack>
         <Stack direction="row" paddingY={2} height="100%">
-          <Stack width={200}>
-            <FilterPanel />
-          </Stack>
           <Stack flex={1}>
             <OutlinedInput
               placeholder="Search name"
