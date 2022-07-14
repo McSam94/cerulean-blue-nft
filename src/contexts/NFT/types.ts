@@ -31,11 +31,11 @@ export type Collection = {
   large_image_url: string;
   name: string;
   slug: string;
-  primary_asset_contracts: {
+  primary_asset_contracts: Array<{
     image_url: string;
     name: string;
     description: string;
-  };
+  }>;
   stats: {
     count: number;
     num_owners: number;

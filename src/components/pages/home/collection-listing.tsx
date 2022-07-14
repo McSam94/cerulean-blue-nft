@@ -34,12 +34,7 @@ const NftListing: React.FC = () => {
 
         if (!collection) return null;
 
-        const {
-          image_url,
-          name,
-          slug,
-          primary_asset_contracts: { image_url: contract_image_url, name: contract_name },
-        } = collection;
+        const { image_url, name, slug, primary_asset_contracts } = collection;
 
         return (
           <Link href={`/collection/${slug}`} passHref>
@@ -63,8 +58,8 @@ const NftListing: React.FC = () => {
                 <Stack direction="row" width="100%" alignItems="center" paddingY={2} paddingX={4} spacing={4}>
                   <Avatar
                     variant="rounded"
-                    alt={contract_name}
-                    src={contract_image_url ?? '/placeholder/avatar-default.png'}
+                    alt={primary_asset_contracts?.[0]?.name}
+                    src={primary_asset_contracts?.[0]?.image_url ?? '/placeholder/avatar-default.png'}
                     sx={{ width: 80, height: 80, marginTop: '-50px' }}
                   />
                   <Typography variant="subtitle1" fontWeight={500}>
