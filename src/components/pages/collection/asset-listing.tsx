@@ -11,7 +11,6 @@ const COLUMN_COUNT = 3;
 const AssetListing: React.FC = () => {
   const { query } = useRouter();
   const { fetchAssets, fetchMoreAssets, isSearch, assets, filteredAssets, isLoadingMore, hasMoreAssets } = useNFT();
-  console.log('🚀 ~ file: asset-listing.tsx ~ line 14 ~ assets', assets);
 
   const data = React.useMemo(() => (isSearch ? filteredAssets : assets), [isSearch, filteredAssets, assets]);
 

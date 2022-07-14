@@ -18,7 +18,6 @@ const Collection: NextPage = () => {
     collection,
     isCollectionDetailLoading,
   } = useNFT();
-  console.log('🚀 ~ file: [slug].tsx ~ line 13 ~ collection', collection);
 
   const [searchTerm, setSearchTerm] = React.useState<string>('');
 
